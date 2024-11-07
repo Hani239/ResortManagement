@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Props = {};
-const editTopicForm = (props: Props) => {
+const EditTopicForm = (props: Props) => {
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -135,4 +135,4 @@ const editTopicForm = (props: Props) => {
         </div>
     );
 }
-export default editTopicForm;
+export default EditTopicForm;

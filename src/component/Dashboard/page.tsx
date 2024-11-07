@@ -9,7 +9,7 @@ import Event from "@/app/Img/Event.png"
 import Ame from "@/app/Img/Ame.png"
 import Sidebar from "@/component/Sidebar/page"
 
-export default function editTopicForm(){
+export default function EditTopicForm(){
     return (
         <div className="w-full h-full">
             <div className="w-full md:w-1/4 h-full float-start inline-block p-5">

@@ -9,10 +9,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 // import React, { useState, FC, ChangeEvent, FormEvent } from 'react'
 import { GoChevronRight } from "react-icons/go";
-// export default function editTopicForm() {
+// export default function EditTopicForm() {
 type Props = {};
 
-const editTopicForm = (props: Props) => {
+const EditTopicForm = (props: Props) => {
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
     const [id, setId] = useState('');
     const [foodcatname, setFoodcatname] = useState('');
@@ -212,4 +212,4 @@ const editTopicForm = (props: Props) => {
         </div>
     );
 }
-export default editTopicForm;
+export default EditTopicForm;
