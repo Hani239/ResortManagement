@@ -203,8 +203,8 @@ const RoomData = (props: Props) => {
           </form>
 
           <br /><br /><br />
-          {rooms.map(room => (
-            <div className=" border-2 w-full h-full p-5">
+          {rooms.map((room, index) => (
+            <div key={room._id || index} className=" border-2 w-full h-full p-5">
               <div>
                 <button className="float-right"><HiPencilAlt /></button>
                 <CgRemove />

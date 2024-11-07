@@ -14,7 +14,7 @@ const Cards_R = (props: Props) => {
                 <div className='p-10 min-[767]:w-48 min-[767]:h-50 md:flex-1 lg:flex-1 m-3 md:m-0 lg:m-0 rounded-tl-[95px]  rounded-br-[95px] bg-[#f7f7f7]'>
                     <Image src={Item} alt="Hand" height={90} width={90} className='' />
                     <h2 className='font-extrabold mt-6'>Handmade in New York</h2>
-                    <p>Our pieces are made by talented Spanish heirloom artists and seamstresses who practice the art and techniques of handmade baby and children’s clothing.</p>
+                    <p>Our pieces are made by talented Spanish heirloom artists and seamstresses who practice the art and techniques of handmade baby and children&apos;s clothing.</p>
 
                 </div>
                 <div className='relative p-10 min-[767]:w-48 min-[767]:h-50 md:flex-1 lg:flex-1 m-3 md:m-0 lg:m-0 rounded-br-[95px]  bg-[#e8eeef]'>
@@ -28,14 +28,14 @@ const Cards_R = (props: Props) => {
                     </div>
                   
                     <h2 className='font-extrabold mt-28'>Premium Quality</h2>
-                    <p className='z-1'>We offer the best quality materials and textiles; attention to detail and baby's comfort always come first. We ensure every item meets premium standards.</p>
+                    <p className='z-1'>We offer the best quality materials and textiles. attention to detail and baby&apos;s comfort always come first. We ensure every item meets premium standards.</p>
 
 
                 </div>
                 <div className=' p-10 min-[767]:w-48 min-[767]:h-50 md:flex-1 lg:flex-1 m-3 md:m-0 lg:m-0 rounded-tl-[95px]  rounded-br-[95px] bg-[#f7f7f7]'>
                     <Image src={Item4} alt="Heart" height={90} width={90} className='' />
                     <h2 className='font-extrabold mt-6'>Tradition and Passion</h2>
-                    <p>In an age of mass production, we aim to keep alive traditional craftsmanship by sharing the timeless beauty and traditions of Spanish baby and children’s clothing.</p>
+                    <p>In an age of mass production, we aim to keep alive traditional craftsmanship by sharing the timeless beauty and traditions of Spanish baby and children&apos;s clothing.</p>
                 </div>
             </div>
         </>

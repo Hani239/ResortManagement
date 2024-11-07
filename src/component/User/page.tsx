@@ -81,7 +81,7 @@ const UserProfile = (props: Props) => {
 
         {
           myOrders.map((item, index) => (
-            <div className="w-full p-5 border-2">
+            <div key={index} className="w-full p-5 border-2">
               <h3>Order #{index + 1}<b className='text-green-900 float-right'> Paid</b></h3>
               {/* <p>Status: {item.order.status}</p> */}
               <p className='text-green-900 float-right'>Total amount: ₹{item.order.amount}</p>
