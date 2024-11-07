@@ -34,7 +34,7 @@ const Blog_V = ({ className, children, ...props }: Props) => {
             <div className='box flex gap-96'>
                 <div className='box m-5 '>
                     <a href='#' className="hover:text-red-500 hover:underline font-bold text-xl sm:text-2xl">
-                        <p className="text-left ...">Keep Your Child's Mind Active This Summer</p>
+                        <p className="text-left ...">Keep Your Child&apos;s Mind Active This Summer</p>
                     </a>
                 </div>
                 <div className='box m-5  '>

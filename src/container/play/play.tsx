@@ -26,7 +26,7 @@ const Play = (props: Props) => {
                     
                     <div className='flex flex-wrap justify-center gap-5 items-center mx-6 '>
                         <div className=''>
-                            <p className='font-dancing_script text-6xl font-semibold '>Wedding's & Events</p>
+                            <p className='font-dancing_script text-6xl font-semibold '>Wedding&apos;s & Events</p>
                             <p className='font-playpen text-4xl'>Celebrate your special day </p>
                             <br />
                             <div className='flex '>

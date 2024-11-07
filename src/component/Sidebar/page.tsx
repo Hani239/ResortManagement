@@ -7,7 +7,7 @@ import Food from "@/app/Img/Food.png"
 import Emp from "@/app/Img/Emp.png"
 import Event from "@/app/Img/Event.png"
 import Ame from "@/app/Img/Ame.png"
-import Sidebar from "@/components/Sidebar/page"
+// import Sidebar from "@/components/Sidebar/page"
 export default function EditTopicForm(){
     return (
         
