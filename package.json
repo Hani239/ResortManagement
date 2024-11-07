@@ -1,0 +1,51 @@
+{
+  "name": "project7",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "17": "^0.0.0",
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.1.1",
+    "axios": "^1.6.7",
+    "clsx": "^2.0.0",
+    "hds-core": "^3.3.0",
+    "materialize-css": "^1.0.0",
+    "mongoose": "^8.2.1",
+    "next": "14.0.4",
+    "node": "^21.2.0",
+    "nodemailer": "^6.9.15",
+    "razorpay": "^2.9.5",
+    "rc-slider": "^10.5.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-icons": "^4.12.0",
+    "react-router-dom": "^6.22.3",
+    "swiper": "^11.0.5",
+    "typescript": "^5.3.3",
+    "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.16",
+    "css-loader": "^6.8.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8.4.32",
+    "style-loader": "^3.3.3",
+    "tailwind-scrollbar": "^3.0.5",
+    "tailwindcss": "^3.4.1"
+  },
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "next.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
