@@ -15,8 +15,26 @@ const Login = (props: Props) => {
   const [error, setError] = useState(false);
   const router = useRouter();
 
+  // const isValidEmail = (email: string) => {
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   return emailRegex.test(email);
+  // };
+
   const handleLogin = async () => {
     console.log(email, password);
+
+    // if (!isValidEmail(email)) {
+    //   setError(true);
+    //   alert("Please enter a valid email");
+    //   return false;
+    // }
+
+    // if (password.length < 6) {
+    //   setError(true);
+    //   alert("Password must be at least 6 characters long");
+    //   return false;
+    // }
+
     if (!email || !password) {
       setError(true)
       return false

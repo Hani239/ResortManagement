@@ -32,9 +32,9 @@ const Categories = (props: Props) => {
       <div className=' bg-[#f7f7f7] rounded-tl-[85px]  rounded-br-[85px] p-5 md:m-5 max-[767px]:my-5 h-96 w-80 flex flex-col justify-center items-center md:flex-1 flex-wrap'>
         <Image src={Pin} alt='Pin' height={60} width={60} className='flex m-2' />
         <p className='flex text-center font-bold text-xl m-2 '>Find us</p>
-        <p className='flex text-center font-light text-xs mt-2'>Gram Bharti Cross Road, <br /> Limbodra, Road, Mahudi, Gujarat 382721</p>
+        <p className='flex text-center font-light text-xs mt-2'>Aashram Cross Road, <br /> Mahudi, Gujarat 382721</p>
         <p className='flex text-center font-light text-xs mb-2'> Mon – Fri: 9am – 3pm</p>
-        <Link href={'https://www.google.com/maps/place/Taj+Gandhinagar+Resort+%26+Spa/@23.3755394,72.6910161,17z/data=!3m1!4b1!4m9!3m8!1s0x395c337e41745715:0x1af5b19dec45b1b1!5m2!4m1!1i2!8m2!3d23.3755394!4d72.6910161!16s%2Fg%2F11khcghcdw?entry=ttu'}><Button text="Get Direction" className='py-2 m-2' /></Link>
+        <Link href={'https://maps.app.goo.gl/a8ctNpLA6dYUHxyx6'}><Button text="Get Direction" className='py-2 m-2' /></Link>
       </div>
     </div>
   )

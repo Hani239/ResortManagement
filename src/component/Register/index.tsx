@@ -22,7 +22,35 @@ const Register = (props: Props) => {
   const [error, setError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isValidPhone = (phone: string) => {
+    const phoneRegex = /^[0-9]{10}$/; // This checks for a 10-digit number. Adjust as needed for different formats.
+    return phoneRegex.test(phone);
+  };
+
   const handleSignup = async () => {
+    if (!isValidEmail(email)) {
+      setError(true);
+      alert("Please enter a valid email");
+      return false;
+    }
+
+    if (!isValidPhone(phone)) {
+      setError(true);
+      alert("Please enter a valid phone number");
+      return false;
+    }
+
+    if (password.length < 6) {
+      setError(true);
+      alert("Password must be at least 6 characters long");
+      return false;
+    }
+
     if (password !== c_password) {
       setPasswordError(true)
       return false

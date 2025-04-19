@@ -20,7 +20,7 @@ const Footer = ({ className, children, ...props }: Props) => {
               alt="logo"
               className="h-20 w-auto ml-6"
             /></Link>
-            <p className='pt-6 mb-4'>Gram Bharti Cross Road,<br />  Limbodra, Road, Mahudi, Gujarat 382721</p>
+            <p className='pt-6 mb-4'>Aashram Cross Road,<br /> Mahudi, Gujarat 382721</p>
 
             <p className='font-semibold text-black hover:text-red-500 cursor-pointer transform transition-transform duration-300 hover:scale-110'>079 35033000</p>
 

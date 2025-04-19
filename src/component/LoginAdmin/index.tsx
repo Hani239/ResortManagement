@@ -40,7 +40,7 @@ const LoginAdmin = (props: Props) => {
       // else{
       //   router.push("/");
       // }
-      router.push("/AdminDash")
+      router.push('/AdminDash');
       alert("Login Successfull")
     } else {
       alert("Login Failed")
