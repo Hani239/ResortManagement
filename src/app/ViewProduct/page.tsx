@@ -22,7 +22,11 @@ const ViewProduct = (props: Props) => {
   const [checkOutDate, setCheckOutDate] = useState('');
   const [cartData, setCartData] = useState();
   const [removeCartData, setRemoveCartData] = useState()
-  const [cartStorage, setCartStorage] = useState(JSON.parse(localStorage.getItem('cart')));
+  // const [cartStorage, setCartStorage] = useState(JSON.parse(localStorage.getItem('cart')));
+  const [cartStorage, setCartStorage] = useState(() => {
+    const storedCart = localStorage.getItem('cart');
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
   const [cartIds, setCartIds] = useState(cartStorage ? () => cartStorage.map((item) => item._id) : []);
 
   // Load rooms on page load
