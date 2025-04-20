@@ -11,7 +11,9 @@ import UserProfile from "@/component/User/page";
 type Props = {}
 
 const Profile = (props: Props) => {
-    const userStorage = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
+    // const userStorage = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
+    const userData = localStorage.getItem('user');
+    const userStorage = userData ? JSON.parse(userData) : undefined;
     const [user, setUser] = useState(userStorage ? userStorage : undefined);
     const [login, setLogin] = useState(true);
     console.log("order flag", props)
