@@ -8,7 +8,7 @@ import { IoMenu } from 'react-icons/io5';
 const HamburgerMenuAdmin = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isClothingOpen, setIsClothingOpen] = useState(false);
-    const adminStorage = localStorage.getItem('admin') && JSON.parse(localStorage.getItem('admin'));
+    const adminStorage = localStorage.getItem('admin') && JSON.parse(localStorage.getItem('admin') || '{}');
     const [admin, setAdmin] = useState(adminStorage ? adminStorage : undefined);
 
     const router = useRouter();
