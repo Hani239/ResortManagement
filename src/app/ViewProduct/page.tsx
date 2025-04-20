@@ -17,7 +17,7 @@ type Props = {
 }
 
 const ViewProduct = (props: Props) => {
-  const [rooms, setRooms] = useState();
+  const [rooms, setRooms] = useState<any>();
   const router = useRouter();
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');

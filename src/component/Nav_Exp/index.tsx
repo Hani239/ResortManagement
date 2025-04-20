@@ -14,8 +14,8 @@ import Link from 'next/link';
 import Cart from '../Cart';
 import HamburgerMenu from '../Hamburger_Menu';
 
-type Props = {} & React.HTMLAttributes<HTMLElement>;
-const Nav = ({ className, children, ...props }: Props) => {
+type Props = { cartData?: any; removeCartData?: any;} & React.HTMLAttributes<HTMLElement>;
+const Nav = ({ className, children,cartData, removeCartData, ...props }: Props) => {
    
     const [showDropdown, setShowDropdown] = useState(false);
     const [cartOpen, setCartOpen] = useState<boolean>(false);
