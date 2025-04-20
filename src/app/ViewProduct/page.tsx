@@ -27,6 +27,7 @@ const ViewProduct = (props: Props) => {
     const storedCart = localStorage.getItem('cart');
     return storedCart ? JSON.parse(storedCart) : [];
   });
+  
   const [cartIds, setCartIds] = useState(cartStorage ? () => cartStorage.map((item) => item._id) : []);
 
   // Load rooms on page load
@@ -89,12 +90,6 @@ const ViewProduct = (props: Props) => {
     setRemoveCartData();
   };
 
-  const removeFromCart = async (id) => {
-    setRemoveCartData(id);
-    var localIds = cartIds.filter(item => item !== id);
-    setCartData()
-    setCartIds(localIds)
-  }
 
   return (
     <div>
@@ -129,7 +124,7 @@ const ViewProduct = (props: Props) => {
             <div className='inline-flex gap-2 mb-5'>
               {
                 cartIds.includes(rooms?._id) ?
-                  <div className='flex'><Button text={'Remove From Cart'} className='px-12' onClick={() => removeFromCart(rooms?._id)} /></div> :
+                  <div className='flex'><button className='w-auto h-auto font-inter-100 font-semibold text-xs p-4 text-white align-middle border border-dashed border-white rounded-lg px-12 bg-slate-400 cursor-not-allowed' disabled>Added to Cart</button></div> :
                   <div className='flex'><Button text={'Add to Cart'} className='px-12' onClick={() => addToCart(rooms)} /></div>
               }
               <div className='flex text-red-500'><IoMdHeartEmpty size={50} /></div>
