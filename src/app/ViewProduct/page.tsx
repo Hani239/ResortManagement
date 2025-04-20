@@ -12,6 +12,7 @@ import New_Summer from '@/component/New_Summer'
 import { useRouter } from 'next/navigation';
 
 type Props = {
+  searchParams: any;
   params: any
 }
 
@@ -28,7 +29,10 @@ const ViewProduct = (props: Props) => {
     return storedCart ? JSON.parse(storedCart) : [];
   });
   
-  const [cartIds, setCartIds] = useState(cartStorage ? () => cartStorage.map((item) => item._id) : []);
+  // const [cartIds, setCartIds] = useState(cartStorage ? () => cartStorage.map((item) => item._id) : []);
+  const [cartIds, setCartIds] = useState(
+    cartStorage ? () => cartStorage.map((item: { _id: string }) => item._id) : []
+  );
 
   // Load rooms on page load
   useEffect(() => {
