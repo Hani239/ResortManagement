@@ -8,7 +8,9 @@ import Link from "next/link";
 import CheckOut from "@/container/CheckOut";
 import UserProfile from "@/component/User/page";
 
-type Props = {}
+type Props = {
+    searchParams?: { [key: string]: string | string[] | undefined };
+  };
 
 const Profile = (props: Props) => {
     // const userStorage = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
