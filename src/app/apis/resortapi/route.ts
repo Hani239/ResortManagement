@@ -4,27 +4,26 @@ import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    await mongoose.connect(connectionStr, {
-        useNewUrlParser: true,
-    })
+    await mongoose.connect(connectionStr); // no need for options
+  
     try {
-        const data = await resortSchema.find();
-        console.log(data);
-        return NextResponse.json({ data });
-
+      const data = await resortSchema.find();
+      console.log(data);
+      return NextResponse.json({ data });
+  
     } catch (error) {
-        console.error("Error retrieving data:", error);
-        return NextResponse.error(new Error("Failed to fetch data"));
+      console.error("Error retrieving data:", error);
+      return NextResponse.json(
+        { success: false, message: "Failed to fetch data" },
+        { status: 500 }
+      );
     }
-    // return NextResponse.json({ result: true })
-}
+  }
 
-export async function POST(request){
+export async function POST(request: { json: () => any; }){
     let payload= await request.json();
     let result;
-    await mongoose.connect(connectionStr, {
-        useNewUrlParser: true,
-    })
+    await mongoose.connect(connectionStr); // no need for options
 
     if(payload.login){
         //For Login
