@@ -7,9 +7,11 @@ import { useRouter } from 'next/navigation';
 import { hasCustomGetInitialProps } from 'next/dist/build/utils';
 // import { useNavigate } from 'react-router-dom';
 
-type Props = {};
+type Props = {
+  redirect?: { [key: string]: string | string[] | undefined };
+};
 
-const Login = (props: Props) => {
+const Login = ({ redirect }: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);

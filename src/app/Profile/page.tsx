@@ -10,15 +10,14 @@ import UserProfile from "@/component/User/page";
 
 type Props = {
     searchParams?: { [key: string]: string | string[] | undefined };
-  };
+};
 
-const Profile = (props: Props) => {
+const Profile = ({ searchParams }: Props) => {
     // const userStorage = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
     const userData = localStorage.getItem('user');
     const userStorage = userData ? JSON.parse(userData) : undefined;
     const [user, setUser] = useState(userStorage ? userStorage : undefined);
     const [login, setLogin] = useState(true);
-    console.log("order flag", props)
     return (
         <main className=''>
             <div className="relative flex z-10">
@@ -31,7 +30,8 @@ const Profile = (props: Props) => {
                             <UserProfile />
                         </> :
                         <>
-                            {login ? <Login redirect={props.searchParams} /> : <Register redirect={props.searchParams} />}
+                            {/* {login ? <Login redirect={props.searchParams} /> : <Register redirect={props.searchParams} />} */}
+                            {login ? <Login redirect={searchParams} /> : <Register redirect={searchParams} />}
 
                             <p className="mt-4 text-sm text-center text-gray-700">
                                 <button className='font-medium text-red-600 hover:underline' onClick={() => setLogin(!login)}>

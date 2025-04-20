@@ -7,9 +7,11 @@ import React, { useState, FC, ChangeEvent, FormEvent } from 'react'
 import { GoChevronRight } from "react-icons/go";
 import "./style.css"
 
-type Props = {};
+type Props = {
+  redirect?: { [key: string]: string | string[] | undefined };
+};
 
-const Register = (props: Props) => {
+const Register = ({ redirect }: Props) => {
   // const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
