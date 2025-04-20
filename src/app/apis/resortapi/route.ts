@@ -20,7 +20,7 @@ export async function GET() {
     }
   }
 
-export async function POST(request: { json: () => any; }){
+export async function POST(request:any){
     let payload= await request.json();
     let result;
     await mongoose.connect(connectionStr); // no need for options
