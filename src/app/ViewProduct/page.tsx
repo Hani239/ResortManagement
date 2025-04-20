@@ -21,14 +21,14 @@ const ViewProduct = (props: Props) => {
   const router = useRouter();
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
-  const [cartData, setCartData] = useState();
+  const [cartData, setCartData] = useState<any>(undefined);
   const [removeCartData, setRemoveCartData] = useState()
   // const [cartStorage, setCartStorage] = useState(JSON.parse(localStorage.getItem('cart')));
   const [cartStorage, setCartStorage] = useState(() => {
     const storedCart = localStorage.getItem('cart');
     return storedCart ? JSON.parse(storedCart) : [];
   });
-  
+
   // const [cartIds, setCartIds] = useState(cartStorage ? () => cartStorage.map((item) => item._id) : []);
   const [cartIds, setCartIds] = useState(
     cartStorage ? () => cartStorage.map((item: { _id: string }) => item._id) : []
@@ -65,22 +65,26 @@ const ViewProduct = (props: Props) => {
   console.log(cartIds);
 
   const loadRooms = async () => {
-    const id = props.searchParams.id
-    console.log(id)
-    let response = await fetch("http://localhost:3000/api/user/" + id);
-    response = await response.json();
-    if (response.success) {
-      setRooms(response.details)
-    } else {
-      alert("Room List Not Loading")
-    }
-  }
+    const id = props.searchParams.id;
+    console.log(id);
 
-  const addToCart = async (item) => {
-    let cartStorage = JSON.parse(localStorage.getItem('cart')) || [];
+    const res = await fetch("http://localhost:3000/api/user/" + id);
+    const data = await res.json() as { success: boolean; details: any };
+
+    if (data.success) {
+      setRooms(data.details);
+    } else {
+      alert("Room List Not Loading");
+    }
+  };
+
+  const addToCart = async (item: { _id: any; } | undefined) => {
+    if (!item) return;
+
+    let cartStorage = JSON.parse(localStorage.getItem('cart') || '[]');
     const cartItem = { ...item, checkInDate, checkOutDate };
 
-    const existingItemIndex = cartStorage.findIndex(cartItem => cartItem._id === item._id);
+    const existingItemIndex = cartStorage.findIndex((cartItem: { _id: any; }) => cartItem._id === item._id);
     if (existingItemIndex >= 0) {
       cartStorage[existingItemIndex] = cartItem;
     } else {
@@ -89,10 +93,12 @@ const ViewProduct = (props: Props) => {
 
     localStorage.setItem('cart', JSON.stringify(cartStorage));
     setCartStorage(cartStorage);
-    setCartIds(cartStorage.map(item => item._id));
+    setCartIds(cartStorage.map((item: { _id: any; }) => item._id));
+
+    // Use 'any' here to bypass type-checking
     setCartData(cartItem);
-    setRemoveCartData();
   };
+
 
 
   return (
