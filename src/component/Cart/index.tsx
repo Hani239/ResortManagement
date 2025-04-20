@@ -24,81 +24,10 @@ interface CartProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const products: Product[] = [
-  {
-    id: 1,
-    name: 'A Shape Room',
-    href: '#',
-    color: '',
-    price: '7000',
-    quantity: 1,
-    imageSrc: pic1,
-    imageAlt: 'A Shape Room',
-  },
-  {
-    id: 2,
-    name: 'Sky Room',
-    href: '#',
-    color: '',
-    price: '9000',
-    quantity: 1,
-    imageSrc: pic2,
-    imageAlt: 'Sky Room',
-  },
-];
-
-// const Cart: FC = () => {
-
-//   const [cartStorage, setCartStorage] = useState(JSON.parse(localStorage.getItem('cart')))
-//   const [open, setOpen] = useState<boolean>(true);
-
-//   // const removeFromCart = async(id) =>{
-//   //   localStorage.removeItem('cart');
-//   // }
-
-//   const [cartData, setCartData] = useState();
-//   const [removeCartData,setRemoveCartData] = useState()
-//   // const [cartStorage, setCartStorage] = useState(JSON.parse(localStorage.getItem('cart')));
-//   const [cartIds, setCartIds] = useState(cartStorage ? () => cartStorage.map((item) => {
-//     return item._id;
-//   }) : []);
-//   const [cartNumber, setCartNumber] = useState(cartStorage?.length);
-//     const [cartItem, setCartItem] = useState(cartStorage);
-
-//   const removeFromCart = async(id) =>{
-//     setRemoveCartData(id);
-//     var localIds = cartIds.filter(item=>item!=id);
-//     setCartData()
-//     setCartIds(localIds)
-//   }
-
-//   useEffect(() => {
-//     if (removeCartData) {
-//       let localCartItem = cartItem.filter((item) => {
-//         return item._id != removeCartData
-//       });
-//       setCartItem(localCartItem);
-//       setCartNumber(cartNumber-1);
-//       localStorage.setItem('cart', JSON.stringify(localCartItem))
-//       if(localCartItem.length==0){
-//         localStorage.removeItem('cart')
-//       }
-//     }
-//   }, [removeCartData])
-
-
-
-
-
-
-
-
-
-
 const Cart: FC = () => {
   const [open, setOpen] = useState<boolean>(true);
-  const [cartStorage, setCartStorage] = useState(() => JSON.parse(localStorage.getItem('cart')) || []);
-  const [cartIds, setCartIds] = useState(cartStorage ? () => cartStorage.map((item) => {
+  const [cartStorage, setCartStorage] = useState(() => JSON.parse(localStorage.getItem('cart') || '[]'));
+  const [cartIds, setCartIds] = useState(cartStorage ? () => cartStorage.map((item: { _id: any; }) => {
     return item._id;
   }) : []);
   const [cartNumber, setCartNumber] = useState(cartStorage?.length);
@@ -113,16 +42,16 @@ const Cart: FC = () => {
   // );
   useEffect(() => {
     // Calculate the total whenever cartStorage changes
-    const newTotal = cartStorage.reduce((acc, item) => acc + item.price, 0);
+    const newTotal = cartStorage.reduce((acc: any, item: { price: any; }) => acc + item.price, 0);
     setTotal(newTotal);
   }, [cartStorage]);
 
   useEffect(() => {
     if (removeCartData !== null) {
       // Optimistically remove item from the UI
-      const updatedCartItems = cartStorage.filter(item => item._id !== removeCartData);
+      const updatedCartItems = cartStorage.filter((item: { _id: string; }) => item._id !== removeCartData);
       setCartStorage(updatedCartItems);
-      setCartIds(updatedCartItems.map(item => item._id));
+      setCartIds(updatedCartItems.map((item: { _id: any; }) => item._id));
       setCartNumber(updatedCartItems?.length);
 
       // Update localStorage
@@ -148,16 +77,15 @@ const Cart: FC = () => {
     window.location.reload();
   }
 
-  const Checkout=()=>{
-    if(JSON.parse(localStorage.getItem('user'))){
-        router.push('/CheckOut')
-    }
-    else{
-        router.push('/Profile?order=true')        //if not login then it will redirect to login page and then after login it will bring back to order page
-                                                    //here order is the order flag  which we get when prop pass from user-auth(login)
-    }
-}
-
+const Checkout = () => {
+  const user = localStorage.getItem('user');
+  if (user && JSON.parse(user)) {
+    router.push('/CheckOut');
+  } else {
+    router.push('/Profile?order=true');         //if not login then it will redirect to login page and then after login it will bring back to order page
+                                                //here order is the order flag  which we get when prop pass from user-auth(login)
+  }
+};
   return (
     <div className="relative">
       {open && (
@@ -214,7 +142,7 @@ const Cart: FC = () => {
                         <div className="mt-8">
                           <div className="flow-root">
                             <ul role="list" className="-my-6 divide-y divide-gray-200">
-                              {cartStorage.map((product) => (
+                              {cartStorage.map((product:any) => (
                                 <li key={product._id} className="flex py-6">
                                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                     <Image
