@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function ProfilePicture({ src, alt }) {
+export default function ProfilePicture({ src, alt } : any) {
   return (
     <div className="w-32 h-32 overflow-hidden ">
       <Image
