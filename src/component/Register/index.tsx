@@ -75,25 +75,29 @@ const Register = ({ redirect }: Props) => {
     //   address,
     //   phone
     // };
-    let response = await fetch('http://localhost:3000/api/user',{
+    let response = await fetch('http://localhost:3000/api/user', {
       method: "POST",
-      body: JSON.stringify({username, email, password, address, phone})
-    })
-    response = await response.json();
-    if(response.success){
-      const {result} = response
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ username, email, password, address, phone })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      const { result } = data;
       delete result.password;
-      localStorage.setItem("user",JSON.stringify(result));
-      if(props.redirect?.order){
-        router.push('/CheckOut')
+      localStorage.setItem("user", JSON.stringify(result));
+      if (redirect?.order) {
+        router.push('/CheckOut');
+      } else {
+        router.push('/');
       }
-      else{
-        router.push("/");
-      }
-      alert("Resort User Registered Successfully")
+      alert("Resort User Registered Successfully");
     }
+    
   };
-
 
   return (
     <>
