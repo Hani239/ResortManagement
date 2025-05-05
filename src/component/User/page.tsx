@@ -7,38 +7,91 @@ import UserProfile1 from '@/Img/userprofile.jpg';
 import Imgg from '@/Img/images/Images/room/bee6.jpg';
 import Img2 from '@/Img/images/Images/room/a1 (1).jpg';
 
-
 type Props = {}
 
+// Define user and order types if needed
+type User = {
+  _id: string;
+  [key: string]: any;
+};
+
+type Order = {
+  rooms: any;
+  order: any;
+  _id: string;
+  // Add other order fields here
+};
+
 const UserProfile = (props: Props) => {
-  const userStorage = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
-  const checkInDate = localStorage.getItem('checkInDate');
-  const checkOutDate = localStorage.getItem('checkOutDate');
-  const [user, setUser] = useState(userStorage ? userStorage : undefined);
+  // const userStorage = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
+  // const checkInDate = localStorage.getItem('checkInDate');
+  // const checkOutDate = localStorage.getItem('checkOutDate');
+  // const [user, setUser] = useState(userStorage ? userStorage : undefined);
+
+
+  // const router = useRouter();
+
+  // const [myOrders, setMyOrders] = useState([]);
+
+  // useEffect(() => {
+  //   getMyOrders()
+  // }, [])
+
+  // const getMyOrders = async () => {
+  //   const userStorage = JSON.parse(localStorage.getItem('user'));
+  //   // console.log(userStorage._id)
+  //   let response = await fetch('http://localhost:3000/api/order?id=' + userStorage._id)
+  //   response = await response.json();
+  //   console.log(response)
+  //   if (response.success) {
+  //     setMyOrders(response.result)
+  //   }
+  // }
+  // const logout = () => {
+  //   localStorage.removeItem('user');
+  //   router.push('/') //Here this is not working so i have directly added path to link tag in logout
+  // }
 
 
   const router = useRouter();
 
-  const [myOrders, setMyOrders] = useState([]);
+  const [user, setUser] = useState<User | undefined>(undefined);
+  const [myOrders, setMyOrders] = useState<Order[]>([]);
+  const [checkInDate, setCheckInDate] = useState<string | null>(null);
+  const [checkOutDate, setCheckOutDate] = useState<string | null>(null);
 
   useEffect(() => {
-    getMyOrders()
-  }, [])
+    const storedUser = localStorage.getItem('user');
+    const parsedUser: User | undefined = storedUser ? JSON.parse(storedUser) : undefined;
+    setUser(parsedUser);
 
-  const getMyOrders = async () => {
-    const userStorage = JSON.parse(localStorage.getItem('user'));
-    // console.log(userStorage._id)
-    let response = await fetch('http://localhost:3000/api/order?id=' + userStorage._id)
-    response = await response.json();
-    console.log(response)
-    if (response.success) {
-      setMyOrders(response.result)
+    setCheckInDate(localStorage.getItem('checkInDate'));
+    setCheckOutDate(localStorage.getItem('checkOutDate'));
+
+    if (parsedUser?._id) {
+      getMyOrders(parsedUser._id);
     }
-  }
+  }, []);
+
+  const getMyOrders = async (userId: string) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/order?id=${userId}`);
+      const data = await response.json();
+
+      if (data.success) {
+        setMyOrders(data.result);
+      } else {
+        console.error("Failed to fetch orders.");
+      }
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('user');
-    router.push('/') //Here this is not working so i have directly added path to link tag in logout
-  }
+    router.push('/'); // should work inside use client component
+  };
   return (
 
     <div className="min-h-screen flex  gap-4 w-full py-10 pl-20 ">
@@ -89,7 +142,7 @@ const UserProfile = (props: Props) => {
                 <CgRemove /> */}
               <h4>Rooms:</h4>
               <ul>
-                {item.rooms.map((room, idx) => (
+                {item.rooms.map((room : any, idx : any) => (
                   <li key={idx}>
                     <div className="w-1/4 block md:inline-block h-full">
                       <Image
