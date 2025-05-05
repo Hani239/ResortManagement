@@ -169,55 +169,7 @@ const UserProfile = (props: Props) => {
             </div>
           ))
         }
-
-
-
-        {/* <div className="w-full p-5">
-          <div className="w-1/4 h-full inline-block">
-            <Image src={Imgg} alt="Room Image" className="w-full h-full" />
-          </div>
-          <div className="w-3/4 inline-block pl-5 flex-col-2 gap-4">
-            <div className="text-l m-2">Price: ₹1000  <b className='text-green-900 float-right'> Paid</b></div>
-            <div className="text-l m-2">Qty: 3</div>
-            <div className="text-l m-2">Date : 15/6/2024 to 18/6/2024 [3 Days]</div>
-          </div>
-        </div> */}
-
-
-        {/* <h2 className="text-xl font-semibold mb-4">Your Events</h2>
-        <div className="w-full p-5">
-          <div className="w-1/4 h-full inline-block">
-            <Image src={Imgg} alt="Room Image" className="w-full h-full" />
-          </div>
-          <div className="w-3/4 inline-block pl-5 flex-col-2 gap-4">
-            <div className="text-l m-2">Price: ₹3000  <b className='text-green-900 float-right'> Paid</b></div>
-            <div className="text-l m-2">Qty: 2</div>
-            <div className="text-l m-2">Date : 15/6/2024 to 18/6/2024 [3 Days]</div>
-          </div>
-
-
-        </div> */}
-
-
-
-        {/* <div className="w-full p-5">
-          <div className="w-1/4 h-full inline-block">
-            <Image src={Imgg} alt="Room Image" className="w-full h-full" />
-          </div>
-          <div className="w-3/4 inline-block pl-5 flex-col-2 gap-4">
-            <div className="text-l m-2">Price: ₹3000  <b className='text-green-900 float-right'> Paid</b></div>
-            <div className="text-l m-2">Qty: 2</div>
-            <div className="text-l m-2">Date : 15/6/2024 to 18/6/2024 [3 Days]</div>
-          </div>
-        </div> */}
-
-
-
-
       </div>
-
-
-
     </div>
   )
 
