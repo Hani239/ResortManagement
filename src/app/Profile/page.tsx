@@ -3,7 +3,7 @@ import Footer from "@/container/Footer";
 import Login from "@/component/Login";
 import Nav from "@/component/Nav_Exp";
 import Register from "@/component/Register";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import CheckOut from "@/container/CheckOut";
 import UserProfile from "@/component/User/page";
@@ -14,7 +14,17 @@ type Props = {
 
 const Profile = ({ searchParams }: Props) => {
     // const userStorage = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
-    const userData = localStorage.getItem('user');
+    // const userData = localStorage.getItem('user');
+
+    const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUserData(JSON.parse(storedUser)); // convert string to object
+    }
+  }, []);
+  
     const userStorage = userData ? JSON.parse(userData) : undefined;
     const [user, setUser] = useState(userStorage ? userStorage : undefined);
     const [login, setLogin] = useState(true);
