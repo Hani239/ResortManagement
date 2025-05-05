@@ -14,13 +14,13 @@ import Link from 'next/link';
 import Cart from '../Cart';
 import HamburgerMenu from '../Hamburger_Menu';
 
-type Props = { cartData?: any; removeCartData?: any;} & React.HTMLAttributes<HTMLElement>;
+type Props = { cartData?: any; removeCartData?: boolean;} & React.HTMLAttributes<HTMLElement>;
 
 interface NavProps {
     className?: string;
     children?: React.ReactNode;
     cartData?: any;
-    removeCartData?: string;
+    removeCartData?: boolean;
   }
 
   const Nav: React.FC<NavProps> = ({ className, children, cartData, removeCartData }) => {  

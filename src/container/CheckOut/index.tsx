@@ -9,10 +9,19 @@ import { useRouter } from 'next/navigation'
 import Footer from '../Footer'
 import Nav from '@/component/Nav_Exp'
 
+interface CartItem {
+  _id: string;
+  price: number;
+}
+
+interface User {
+  _id: string;
+}
+
 const CheckOut = () => {
-  const [userStorage, setUserStorage] = useState(null);
-  const [cartStorage, setCartStorage] = useState(null);
-  const [cartItem, setCartItem] = useState(() => JSON.parse(localStorage.getItem('cart')) || []);
+  const [userStorage, setUserStorage] = useState<User | null>(null);
+  const [cartStorage, setCartStorage] = useState<CartItem[]>([]);
+  const [cartItem, setCartItem] = useState<CartItem[]>(() => JSON.parse(localStorage.getItem('cart') || '[]'));
   const router = useRouter();
 
   const [fname, setFname] = useState('');
@@ -39,7 +48,7 @@ const CheckOut = () => {
 
   const sendMail = async () => {
 
-    let productList = cartItem.map((product) => {
+    let productList = cartItem.map((product: any) => {
       return `<ul>${product.roomname} × 1 - ₹${product.price}</ul>`;
     }).join('');
 
@@ -62,7 +71,6 @@ const CheckOut = () => {
         <p>Thank you for your booking!</p>
         <p>Best regards,<br />Paradise Pulse</p>
         `,
-        to: email, // Send email to the user
       })
     })
     console.log(await response.json())
@@ -78,8 +86,8 @@ const CheckOut = () => {
 
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const cart = JSON.parse(localStorage.getItem('cart'));
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
     if (user && cart) {
       setUserStorage(user);
@@ -88,19 +96,28 @@ const CheckOut = () => {
       // Calculate total
       const totalAmount = cart.length === 1
         ? cart[0].price
-        : cart.reduce((acc, item) => acc + item.price, 0);
+        : cart.reduce((acc: any, item: any) => acc + item.price, 0);
       setTotal(totalAmount);
     } else {
       router.push('/');
     }
   }, []);
 
-  const [removeCartData, setRemoveCartData] = useState(false);
-
 
   const orderNow = async () => {
+    if (!userStorage) {
+      alert("User data not found.");
+      return;
+    }
+
+    if (!cartStorage || cartStorage.length === 0) {
+      alert("Cart is empty.");
+      return;
+    }
+
     let user_id = userStorage._id;
-    let room_id = cartStorage.map((item) => item._id).toString();
+
+    let room_id = cartStorage.map((item) => item._id).toString(); 
 
     let collection = {
       user_id,
@@ -141,10 +158,11 @@ const CheckOut = () => {
       body: JSON.stringify(collection),
     });
 
-    response = await response.json();
-    if (response.success) {
+    const data = await response.json();
+    if (data.success) {
+      localStorage.removeItem('cart');
+      setCartItem([]);
       alert("Order Confirmed");
-      setRemoveCartData(true)
       router.push('/Profile');
     } else {
       alert("Order Failed");
@@ -154,7 +172,7 @@ const CheckOut = () => {
   return (
     <main className=''>
       <div className="relative flex z-10">
-        <Nav removeCartData={removeCartData} />
+        <Nav />
       </div>
       <div>
         <div className='flex h-auto w-full flex-wrap mt-16 md:mt-16 lg:mt-32 mb-96 md:px-20'>
@@ -174,24 +192,21 @@ const CheckOut = () => {
                   {
                     error && !lname && <span className='text-red-500 '>Please enter last name</span>
                   }
-                  </div>
+                </div>
               </div><br />
               <div>
-                {/* <div className='flex flex-col font-semibold text-xs h-auto flex-wrap'> <label htmlFor='Company Name (optional)' >Company Name (optional) </label><br />
-              <input type='text' placeholder='Company Name' className='border border-gray-400 py-2 px-4 p-4 rounded-md' />
-            </div> */}
                 <div className='flex flex-wrap'>
                   <div className='font-semibold text-xs w-1/2'> <label htmlFor='No. of Adults*' >No. of Adults</label>
                     <input type='number' min={0} placeholder='No. of Adults' value={num_adult} onChange={(event) => setNum_Adult(event.target.value)} className='border border-gray-400 w-full py-2 px-4 rounded-md' />
                     {
-                    error && !num_adult && <span className='text-red-500 '>Please select the appropriate number</span>
-                  }
+                      error && !num_adult && <span className='text-red-500 '>Please select the appropriate number</span>
+                    }
                   </div>
                   <div className='font-semibold text-xs w-1/2 pl-3' > <label htmlFor='No. of Children*' >No. of Children &#40; &#706;12 y.o.&#41;</label>
                     <input type='number' min={0} placeholder='No. of Children' value={num_child} onChange={(event) => setNum_Child(event.target.value)} className='border border-gray-400 w-full py-2 px-4 rounded-md' />
                     {
-                    error && !num_child && <span className='text-red-500 '>Please select the appropriate number</span>
-                  }
+                      error && !num_child && <span className='text-red-500 '>Please select the appropriate number</span>
+                    }
                   </div>
                 </div><br />
                 <div></div>
@@ -217,10 +232,7 @@ const CheckOut = () => {
                   {
                     error && !address && <span className='text-red-500 '>Please enter address</span>
                   }
-                   </div><br />
-                {/* <div className='flex flex-col font-semibold text-xs h-auto flex-wrap'>
-              <input type='text' placeholder='Apartment,Suit,Unit,Etc.(optional)' value={city} onChange={(event) => setUsername(event.target.value)} className='border border-gray-400 py-2 px-4 p-4 rounded-md' /> <br />
-            </div><br /> */}
+                </div><br />
                 <div className='flex flex-col font-semibold text-xs h-auto flex-wrap'><label htmlFor='Town / City *'>Town / City *</label><br />
                   <select className='border-gray-400 border h-10 w-full ps-6 rounded-md' value={city} onChange={(event) => setCity(event.target.value)}>
                     <option value="" disabled selected>Select your city</option>
@@ -234,32 +246,24 @@ const CheckOut = () => {
                   }
                 </div><br />
                 <div className='flex flex-col font-semibold text-xs h-auto  flex-wrap'> <label htmlFor='Postcode *' >Postcode *</label><br />
-                  <input type='text' placeholder='Postcode' value={postcode} onChange={(event) => setPostcode(event.target.value)} className='border border-gray-400 py-2 px-4 p-4 rounded-md' /> 
+                  <input type='text' placeholder='Postcode' value={postcode} onChange={(event) => setPostcode(event.target.value)} className='border border-gray-400 py-2 px-4 p-4 rounded-md' />
                   {
                     error && !postcode && <span className='text-red-500 '>Please enter Postcode</span>
                   }
-                  </div><br />
+                </div><br />
                 <div className='flex flex-col  font-semibold text-xs h-auto'> <label htmlFor='Phone *' >Phone *</label><br />
-                  <input type='text' placeholder='Phone' value={phone} onChange={(event) => setPhone(event.target.value)} className='border border-gray-400 py-2 px-4 p-4 rounded-md' /> 
+                  <input type='text' placeholder='Phone' value={phone} onChange={(event) => setPhone(event.target.value)} className='border border-gray-400 py-2 px-4 p-4 rounded-md' />
                   {
                     error && !phone && <span className='text-red-500 '>Please enter Phone number </span>
                   }
-                  </div><br />
+                </div><br />
                 <div className='flex flex-col font-semibold text-xs h-auto '> <label htmlFor='Email Address *' >Email Address *</label><br />
-                  <input type='text' placeholder='Your Email Address' value={email} onChange={(event) => setEmail(event.target.value)} className='border border-gray-400 py-2 px-4 p-4 rounded-md' /> 
+                  <input type='text' placeholder='Your Email Address' value={email} onChange={(event) => setEmail(event.target.value)} className='border border-gray-400 py-2 px-4 p-4 rounded-md' />
                   {
-                    error && !email  && <span className='text-red-500 '>Please enter valid email</span>
+                    error && !email && <span className='text-red-500 '>Please enter valid email</span>
                   }
-                  
-                  </div><br />
-                {/* <div className='inline-flex justify-center items-center text-xs font-semibold pb-4'>
-              <div className='flex pr-1'>
-                <input type="checkbox" className='accent-rgb(6 182 212)' />
-              </div>
-              <div className='flex'>
-                Ship to a different address?
-              </div>
-            </div> */}
+
+                </div><br />
                 <br />
                 <div className='flex flex-col font-semibold text-xs h-auto'> <label htmlFor=' Order Notes (optional)' >Order Notes (optional) </label><br />
                   <input type='text' placeholder='Notes about your order,e.g. special notes for delivery' value={order_note} onChange={(event) => setOrder_Note(event.target.value)} className='border border-gray-400 py-2 px-4 p-4 rounded-md' /></div><br />
@@ -270,7 +274,7 @@ const CheckOut = () => {
             <div className=' flex-1 w-1 mt-20 mb-20 min-h-screen flex-wrap'>
               <div className=' flex-auto border-2 border-grey h-auto w-full divide-y divide-gray-400 flex-wrap '>
                 <div className='font-bold text-xl mx-4 md:py-6 '>Your Order<br /><h6 className='font-bold text-xs mt-3'>product</h6></div>
-                {cartItem.map((product) => (
+                {cartItem.map((product: any) => (
                   <ul key={product._id}>
                     <div className='font-semibold text-xs mx-4 py-6'>{product.roomname}  × 1
                       <div className='font-semibold text-xs float-right'>₹{product.price}</div>
@@ -278,20 +282,6 @@ const CheckOut = () => {
                   </ul>
                 ))}
                 <div className='font-bold text-xs mx-4 py-6 '>Subtotal<h6 className='font-semibold text-xs float-right me-2'>₹{total}</h6></div>
-                {/* <div className='font-bold text-xs mx-4 py-6'>Shipping Charge<div className='font-semibold text-xs float-right'>₹40.00<h6 className='font-light text-xs/5'> (ex. VAT)</h6> </div><br />
-                  <div className="flex items-center flex-wrap">
-                    <input type="radio" id="option1" name="options" className="form-radio text-blue-500" />
-                    <label htmlFor="option1" className="ml-2 text-gray-700">Flate Rate:</label>
-                  </div>
-                  <div className="flex items-center flex-wrap">
-                    <input type="radio" id="option2" name="options" className="form-radio text-blue-500" />
-                    <label htmlFor="option2" className="ml-2 text-gray-700">Free Shipping:</label>
-                  </div>
-                  <div className="flex items-center flex-wrap">
-                    <input type="radio" id="option3" name="options" className="form-radio text-blue-500" />
-                    <label htmlFor="option3" className="ml-2 text-gray-700">Local Pickup</label>
-                  </div>
-                </div> */}
                 <div className='font-bold text-xs mx-4 py-6'>TAX &#40;{TAX}%&#41; <h6 className='font-semibold text-xs/5  float-right me-2'>₹{(total * TAX / 100).toFixed(2)}</h6>
                 </div>
                 <div className='font-bold text-xs mx-4 py-6'>Total<h6 className='font-semibold text-xs/5  float-right me-2'>₹{totalAmt.toFixed(2)}</h6>
