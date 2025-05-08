@@ -28,7 +28,7 @@ const RoomData = (props: Props) => {
       const response = await fetch("/api/admin/room/" + _id);
   
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
   
       if (data.success) {
         setRooms(data.result);
@@ -43,7 +43,7 @@ const RoomData = (props: Props) => {
 
   // API call
   const handleAddFoodItem = async () => {
-    console.log(roomname, price, capacity, path, description);
+    // console.log(roomname, price, capacity, path, description);
   
     if (!roomname || !price || !capacity || !path || !description) {
       setError(true);

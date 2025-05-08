@@ -22,7 +22,7 @@ const New_Summer = ({ className, children, ...props }: Props) => {
       const response = await fetch("/api/admin/room/" + _id);
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       if (data.success) {
         setRooms(data.result);

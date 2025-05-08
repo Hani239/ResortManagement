@@ -65,6 +65,7 @@ const ViewProduct = ({ searchParams }: Props) => {
   const loadRooms = async () => {
     try {
       const id = searchParams.id;
+      console.log(id);
       const res = await fetch(`/api/user/${id}`);
       const data = await res.json();
 

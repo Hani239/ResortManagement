@@ -74,7 +74,7 @@ const CheckOut = () => {
         `,
       })
     })
-    console.log(await response.json())
+    // console.log(await response.json())
   }
 
   let TAX = 12;
