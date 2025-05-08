@@ -9,19 +9,20 @@ import Button from '@/component/Button';
 import { IoMdHeartEmpty } from "react-icons/io";
 import PVDrop from '@/component/ProductView/Dropdown3';
 import New_Summer from '@/component/New_Summer'
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 type Props = {
   searchParams: any;
   params: any;
 };
 
-const ViewProduct = ({ searchParams }: Props) => {
+const ViewProduct = (props: Props) => {
   const [rooms, setRooms] = useState<any>();
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const [cartData, setCartData] = useState<any>(undefined);
   const [removeCartData, setRemoveCartData] = useState<any>();
+  const searchParams = useSearchParams();
   const [cartStorage, setCartStorage] = useState<any[]>(() => {
     if (typeof window !== 'undefined') {
       const storedCart = localStorage.getItem('cart');
@@ -64,8 +65,8 @@ const ViewProduct = ({ searchParams }: Props) => {
 
   const loadRooms = async () => {
     try {
-      const id = searchParams.id;
-      console.log(id);
+      const id = searchParams.get('id');
+      console.log(id)
       const res = await fetch(`/api/user/${id}`);
       const data = await res.json();
 
