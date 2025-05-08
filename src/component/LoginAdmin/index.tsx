@@ -29,7 +29,7 @@ const LoginAdmin = () => {
     }
 
     try {
-      const res = await fetch('http://paradise-pulse.vercel.app/api/admin/login', {
+      const res = await fetch('https://paradise-pulse.vercel.app/api/admin/login', {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

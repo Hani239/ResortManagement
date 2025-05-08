@@ -53,7 +53,7 @@ const CheckOut = () => {
       return `<ul>${product.roomname} × 1 - ₹${product.price}</ul>`;
     }).join('');
 
-    const response = await fetch('http://paradise-pulse.vercel.app/api/mail', {
+    const response = await fetch('https://paradise-pulse.vercel.app/api/mail', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -155,7 +155,7 @@ const CheckOut = () => {
 
     const isValidEmail = validateEmail(email);
 
-    let response = await fetch('http://paradise-pulse.vercel.app/api/order', {
+    let response = await fetch('https://paradise-pulse.vercel.app/api/order', {
       method: 'POST',
       body: JSON.stringify(collection),
     });
