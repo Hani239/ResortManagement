@@ -75,7 +75,7 @@ const Register = ({ redirect }: Props) => {
     //   address,
     //   phone
     // };
-    let response = await fetch('http://localhost:3000/api/user', {
+    let response = await fetch('http://paradise-pulse.vercel.app/api/user', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

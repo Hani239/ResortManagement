@@ -29,7 +29,7 @@ const LoginAdmin = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/admin/login', {
+      const res = await fetch('http://paradise-pulse.vercel.app/api/admin/login', {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -46,7 +46,7 @@ const LoginAdmin = () => {
         if (typeof window !== 'undefined') {
           localStorage.setItem("admin", JSON.stringify(result));
         }
-        
+
         router.push('/AdminDash');
         alert("Login Successful");
       } else {

@@ -17,7 +17,7 @@ const List_Items = ({ className, children, ...props }: Props) => {
 
   const loadRooms = async (_id: string) => {
     try {
-      const response = await fetch("http://localhost:3000/api/admin/room/" + _id);
+      const response = await fetch("http://paradise-pulse.vercel.app/api/admin/room/" + _id);
   
       const data = await response.json();
       console.log(data);
