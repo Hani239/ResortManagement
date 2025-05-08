@@ -38,7 +38,7 @@ const Login = ({ redirect }: Props) => {
     }
 
     try {
-      const res = await fetch('https://paradise-pulse.vercel.app/api/user/login', {
+      const res = await fetch('/api/user/login', {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

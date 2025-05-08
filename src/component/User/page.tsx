@@ -45,7 +45,7 @@ const UserProfile = (props: Props) => {
 
   const getMyOrders = async (userId: string) => {
     try {
-      const response = await fetch(`https://paradise-pulse.vercel.app/api/order?id=${userId}`);
+      const response = await fetch(`/api/order?id=${userId}`);
       const data = await response.json();
 
       if (data.success) {

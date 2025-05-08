@@ -9,7 +9,7 @@ export default function Home() {
   const sendMail = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
-    const response = await fetch('https://paradise-pulse.vercel.app/api/mail', {
+    const response = await fetch('/api/mail', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
