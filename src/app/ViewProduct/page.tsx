@@ -13,93 +13,88 @@ import { useRouter } from 'next/navigation';
 
 type Props = {
   searchParams: any;
-  params: any
-}
+  params: any;
+};
 
-const ViewProduct = (props: Props) => {
+const ViewProduct = ({ searchParams }: Props) => {
   const [rooms, setRooms] = useState<any>();
-  const router = useRouter();
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const [cartData, setCartData] = useState<any>(undefined);
-  const [removeCartData, setRemoveCartData] = useState()
-  // const [cartStorage, setCartStorage] = useState(JSON.parse(localStorage.getItem('cart')));
-  const [cartStorage, setCartStorage] = useState(() => {
-    const storedCart = localStorage.getItem('cart');
-    return storedCart ? JSON.parse(storedCart) : [];
+  const [removeCartData, setRemoveCartData] = useState<any>();
+  const [cartStorage, setCartStorage] = useState<any[]>(() => {
+    if (typeof window !== 'undefined') {
+      const storedCart = localStorage.getItem('cart');
+      return storedCart ? JSON.parse(storedCart) : [];
+    }
+    return [];
   });
+  const [cartIds, setCartIds] = useState<string[]>([]);
 
-  // const [cartIds, setCartIds] = useState(cartStorage ? () => cartStorage.map((item) => item._id) : []);
-  const [cartIds, setCartIds] = useState(
-    cartStorage ? () => cartStorage.map((item: { _id: string }) => item._id) : []
-  );
+  const router = useRouter();
 
-  // Load rooms on page load
+  // Sync cartIds whenever cartStorage updates
+  useEffect(() => {
+    setCartIds(cartStorage.map((item: { _id: string }) => item._id));
+  }, [cartStorage]);
+
+  // Load room details on first render
   useEffect(() => {
     loadRooms();
   }, []);
 
-  // Retrieve dates from localStorage on mount
+  // Load check-in and check-out dates on first render
   useEffect(() => {
-    const storedCheckInDate = localStorage.getItem('checkInDate');
-    const storedCheckOutDate = localStorage.getItem('checkOutDate');
-
-    if (storedCheckInDate) setCheckInDate(storedCheckInDate);
-    if (storedCheckOutDate) setCheckOutDate(storedCheckOutDate);
+    if (typeof window !== 'undefined') {
+      const storedCheckIn = localStorage.getItem('checkInDate');
+      const storedCheckOut = localStorage.getItem('checkOutDate');
+      if (storedCheckIn) setCheckInDate(storedCheckIn);
+      if (storedCheckOut) setCheckOutDate(storedCheckOut);
+    }
   }, []);
 
-  // Save check-in date to localStorage when it changes
+  // Update localStorage when check-in/check-out dates change
   useEffect(() => {
-    if (checkInDate) {
-      localStorage.setItem('checkInDate', checkInDate);
-    }
+    if (checkInDate) localStorage.setItem('checkInDate', checkInDate);
   }, [checkInDate]);
 
-  // Save check-out date to localStorage when it changes
   useEffect(() => {
-    if (checkOutDate) {
-      localStorage.setItem('checkOutDate', checkOutDate);
-    }
+    if (checkOutDate) localStorage.setItem('checkOutDate', checkOutDate);
   }, [checkOutDate]);
 
-  console.log(cartIds);
-
   const loadRooms = async () => {
-    const id = props.searchParams.id;
-    console.log(id);
+    try {
+      const id = searchParams.id;
+      const res = await fetch(`/api/user/${id}`);
+      const data = await res.json();
 
-    const res = await fetch("http://localhost:3000/api/user/" + id);
-    const data = await res.json() as { success: boolean; details: any };
-
-    if (data.success) {
-      setRooms(data.details);
-    } else {
-      alert("Room List Not Loading");
+      if (data.success) {
+        setRooms(data.details);
+      } else {
+        alert('Room details could not be loaded.');
+      }
+    } catch (err) {
+      console.error('Error fetching room data:', err);
     }
   };
 
-  const addToCart = async (item: { _id: any; } | undefined) => {
+  const addToCart = (item: any) => {
     if (!item) return;
 
-    let cartStorage = JSON.parse(localStorage.getItem('cart') || '[]');
-    const cartItem = { ...item, checkInDate, checkOutDate };
+    const updatedItem = { ...item, checkInDate, checkOutDate };
+    let updatedCart = [...cartStorage];
 
-    const existingItemIndex = cartStorage.findIndex((cartItem: { _id: any; }) => cartItem._id === item._id);
-    if (existingItemIndex >= 0) {
-      cartStorage[existingItemIndex] = cartItem;
+    const existingIndex = updatedCart.findIndex((i) => i._id === item._id);
+    if (existingIndex >= 0) {
+      updatedCart[existingIndex] = updatedItem;
     } else {
-      cartStorage.push(cartItem);
+      updatedCart.push(updatedItem);
     }
 
-    localStorage.setItem('cart', JSON.stringify(cartStorage));
-    setCartStorage(cartStorage);
-    setCartIds(cartStorage.map((item: { _id: any; }) => item._id));
-
-    // Use 'any' here to bypass type-checking
-    setCartData(cartItem);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    setCartStorage(updatedCart);
+    setCartData(updatedItem);
   };
-
-
 
   return (
     <div>
@@ -140,7 +135,6 @@ const ViewProduct = (props: Props) => {
               <div className='flex text-red-500'><IoMdHeartEmpty size={50} /></div>
             </div>
             <div><PVDrop /></div>
-
             <div className="flex pt-5 gap-2 ">
               {/* Social media icons... */}
             </div>

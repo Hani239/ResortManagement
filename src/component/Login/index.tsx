@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { GoChevronRight } from "react-icons/go";
 
@@ -20,7 +20,12 @@ const Login = ({ redirect }: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setIsClient(true); // Indicates that we're on the client side
+  }, []);
 
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -47,7 +52,9 @@ const Login = ({ redirect }: Props) => {
         const { result } = response;
         if (result?.password) delete result.password;
 
-        localStorage.setItem("user", JSON.stringify(result));
+        if (isClient) {
+          localStorage.setItem("user", JSON.stringify(result));
+        }
 
         if (redirect?.order) {
           router.push('/CheckOut');

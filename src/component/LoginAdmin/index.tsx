@@ -43,7 +43,10 @@ const LoginAdmin = () => {
         const { result } = response;
         if (result?.password) delete result.password;
 
-        localStorage.setItem("admin", JSON.stringify(result));
+        if (typeof window !== 'undefined') {
+          localStorage.setItem("admin", JSON.stringify(result));
+        }
+        
         router.push('/AdminDash');
         alert("Login Successful");
       } else {

@@ -10,24 +10,24 @@ import UserProfile from "@/component/User/page";
 
 type Props = {
     searchParams?: { [key: string]: string | string[] | undefined };
-};
-
-const Profile = ({ searchParams }: Props) => {
-    // const userStorage = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
-    // const userData = localStorage.getItem('user');
-
-    const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUserData(JSON.parse(storedUser)); // convert string to object
-    }
-  }, []);
+  };
   
-    const userStorage = userData ? JSON.parse(userData) : undefined;
-    const [user, setUser] = useState(userStorage ? userStorage : undefined);
+  const Profile = ({ searchParams }: Props) => {
+    const [user, setUser] = useState<any>(null); // user = null initially
     const [login, setLogin] = useState(true);
+  
+    // Check if user is logged in
+    useEffect(() => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+        } catch (e) {
+          console.error("Failed to parse user data", e);
+        }
+      }
+    }, []);
     return (
         <main className=''>
             <div className="relative flex z-10">

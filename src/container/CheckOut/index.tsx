@@ -21,7 +21,8 @@ interface User {
 const CheckOut = () => {
   const [userStorage, setUserStorage] = useState<User | null>(null);
   const [cartStorage, setCartStorage] = useState<CartItem[]>([]);
-  const [cartItem, setCartItem] = useState<CartItem[]>(() => JSON.parse(localStorage.getItem('cart') || '[]'));
+  // const [cartItem, setCartItem] = useState<CartItem[]>(() => JSON.parse(localStorage.getItem('cart') || '[]'));
+  const [cartItem, setCartItem] = useState<CartItem[]>([]);
   const router = useRouter();
 
   const [fname, setFname] = useState('');
@@ -92,6 +93,7 @@ const CheckOut = () => {
     if (user && cart) {
       setUserStorage(user);
       setCartStorage(cart);
+      setCartItem(cart);
 
       // Calculate total
       const totalAmount = cart.length === 1
@@ -160,7 +162,9 @@ const CheckOut = () => {
 
     const data = await response.json();
     if (data.success) {
-      localStorage.removeItem('cart');
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('cart');
+      }
       setCartItem([]);
       alert("Order Confirmed");
       router.push('/Profile');

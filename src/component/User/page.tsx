@@ -23,38 +23,8 @@ type Order = {
 };
 
 const UserProfile = (props: Props) => {
-  // const userStorage = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'));
-  // const checkInDate = localStorage.getItem('checkInDate');
-  // const checkOutDate = localStorage.getItem('checkOutDate');
-  // const [user, setUser] = useState(userStorage ? userStorage : undefined);
-
-
-  // const router = useRouter();
-
-  // const [myOrders, setMyOrders] = useState([]);
-
-  // useEffect(() => {
-  //   getMyOrders()
-  // }, [])
-
-  // const getMyOrders = async () => {
-  //   const userStorage = JSON.parse(localStorage.getItem('user'));
-  //   // console.log(userStorage._id)
-  //   let response = await fetch('http://localhost:3000/api/order?id=' + userStorage._id)
-  //   response = await response.json();
-  //   console.log(response)
-  //   if (response.success) {
-  //     setMyOrders(response.result)
-  //   }
-  // }
-  // const logout = () => {
-  //   localStorage.removeItem('user');
-  //   router.push('/') //Here this is not working so i have directly added path to link tag in logout
-  // }
-
 
   const router = useRouter();
-
   const [user, setUser] = useState<User | undefined>(undefined);
   const [myOrders, setMyOrders] = useState<Order[]>([]);
   const [checkInDate, setCheckInDate] = useState<string | null>(null);

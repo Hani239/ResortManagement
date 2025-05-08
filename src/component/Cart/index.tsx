@@ -9,83 +9,82 @@ import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 
+
 interface Product {
+  _id: string;
   id: number;
   name: string;
   href: string;
   color: string;
-  price: string;
+  price: number;
   quantity: number;
-  imageSrc: string | StaticImport;
+  imageSrc: string;
   imageAlt: string;
-}
-interface CartProps {
-  isOpen: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Cart: FC = () => {
   const [open, setOpen] = useState<boolean>(true);
-  const [cartStorage, setCartStorage] = useState(() => JSON.parse(localStorage.getItem('cart') || '[]'));
-  const [cartIds, setCartIds] = useState(cartStorage ? () => cartStorage.map((item: { _id: any; }) => {
-    return item._id;
-  }) : []);
-  const [cartNumber, setCartNumber] = useState(cartStorage?.length);
+  const [cartStorage, setCartStorage] = useState<Product[]>([]);
+  const [cartIds, setCartIds] = useState<string[]>([]);
+  const [cartNumber, setCartNumber] = useState<number>(0);
   const [removeCartData, setRemoveCartData] = useState<string | null>(null);
-  const [total, setTotal]= useState();
-  const router=useRouter();
+  const [total, setTotal] = useState<number>(0);
+  const router = useRouter();
 
-  // const [total] = useState(() =>
-  //   cartStorage.length === 1
-  //     ? cartStorage[0].price
-  //     : cartStorage.reduce((acc, item) => acc + item.price, 0)
-  // );
+  // Load cart from localStorage on mount
   useEffect(() => {
-    // Calculate the total whenever cartStorage changes
-    const newTotal = cartStorage.reduce((acc: any, item: { price: any; }) => acc + item.price, 0);
+    const stored = localStorage.getItem('cart');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      setCartStorage(parsed);
+      setCartIds(parsed.map((item: any) => item._id));
+      setCartNumber(parsed.length);
+    }
+  }, []);
+
+  // Recalculate total when cart changes
+  useEffect(() => {
+    const newTotal = cartStorage.reduce((acc, item) => acc + item.price, 0);
     setTotal(newTotal);
   }, [cartStorage]);
 
+  // Handle item removal
   useEffect(() => {
     if (removeCartData !== null) {
-      // Optimistically remove item from the UI
-      const updatedCartItems = cartStorage.filter((item: { _id: string; }) => item._id !== removeCartData);
-      setCartStorage(updatedCartItems);
-      setCartIds(updatedCartItems.map((item: { _id: any; }) => item._id));
-      setCartNumber(updatedCartItems?.length);
+      const updated = cartStorage.filter(item => item._id !== removeCartData);
+      setCartStorage(updated);
+      setCartIds(updated.map(item => item._id));
+      setCartNumber(updated.length);
 
-      // Update localStorage
-      if (updatedCartItems.length > 0) {
-        localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+      if (updated.length > 0) {
+        localStorage.setItem('cart', JSON.stringify(updated));
       } else {
         localStorage.removeItem('cart');
-        setOpen(false)
+        setOpen(false);
         window.location.reload();
       }
 
       setRemoveCartData(null);
     }
-  }, [removeCartData, cartStorage]);
+  }, [removeCartData]);
 
   const removeFromCart = (id: string) => {
-    // Optimistically update state
     setRemoveCartData(id);
   };
 
   const close = () => {
-    setOpen(false)
+    setOpen(false);
     window.location.reload();
-  }
+  };
 
-const Checkout = () => {
-  const user = localStorage.getItem('user');
-  if (user && JSON.parse(user)) {
-    router.push('/CheckOut');
-  } else {
-    router.push('/Profile?order=true');         //if not login then it will redirect to login page and then after login it will bring back to order page
-                                                //here order is the order flag  which we get when prop pass from user-auth(login)
-  }
-};
+  const Checkout = () => {
+    const user = localStorage.getItem('user');
+    if (user && JSON.parse(user)) {
+      router.push('/CheckOut');
+    } else {
+      router.push('/Profile?order=true');
+    }
+  };
   return (
     <div className="relative">
       {open && (

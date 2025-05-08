@@ -82,13 +82,15 @@ const Register = ({ redirect }: Props) => {
       },
       body: JSON.stringify({ username, email, password, address, phone })
     });
-    
+
     const data = await response.json();
-    
+
     if (data.success) {
       const { result } = data;
       delete result.password;
-      localStorage.setItem("user", JSON.stringify(result));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("user", JSON.stringify(result));
+      }
       if (redirect?.order) {
         router.push('/CheckOut');
       } else {
@@ -96,7 +98,7 @@ const Register = ({ redirect }: Props) => {
       }
       alert("Resort User Registered Successfully");
     }
-    
+
   };
 
   return (

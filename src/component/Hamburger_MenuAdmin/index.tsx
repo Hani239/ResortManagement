@@ -2,18 +2,27 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import path from 'path';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoMenu } from 'react-icons/io5';
 
 const HamburgerMenuAdmin = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isClothingOpen, setIsClothingOpen] = useState(false);
-    const adminStorage = localStorage.getItem('admin') && JSON.parse(localStorage.getItem('admin') || '{}');
-    const [admin, setAdmin] = useState(adminStorage ? adminStorage : undefined);
+    // const adminStorage = localStorage.getItem('admin') && JSON.parse(localStorage.getItem('admin') || '{}');
+    // const [admin, setAdmin] = useState(adminStorage ? adminStorage : undefined);
+    const [admin, setAdmin] = useState(null);
+
+    useEffect(() => {
+        const storedAdmin = localStorage.getItem('admin');
+        if (storedAdmin) {
+            setAdmin(JSON.parse(storedAdmin));
+        }
+    }, []);
 
     const router = useRouter();
     const logout = () => {
         localStorage.removeItem('admin');
+        setAdmin(null);
         router.push('/') //Here this is not working so i have directly added path to link tag in logout
     }
 
