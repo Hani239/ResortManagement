@@ -64,83 +64,80 @@ const UserProfile = (props: Props) => {
   };
   return (
 
-    <div className="min-h-screen flex  gap-4 w-full py-10 pl-20 ">
-      <div className="bg-white shadow-md rounded-lg p-6 w-1/3 h-full  ">
-        <div className="flex flex-col items-center ">
-          <ProfilePicture src={UserProfile1} alt="User Name" />
-          <h1 className="text-2xl font-semibold mt-4">{user?.username}</h1>
-          <p className="text-gray-600 mt-2">{user?.username}</p>
-          <p className="text-center mt-4 text-gray-700">
-            Welcome  {user?.username} ! You can browse your profile here.
-          </p>
+    <div className="flex flex-col md:flex-row gap-4 w-full py-10 px-4 md:px-20 items-center">
+  {/* Profile Card */}
+  <div className="bg-white shadow-md rounded-lg p-6 w-full md:w-1/3 max-w-md">
+    <div className="flex flex-col items-center">
+      <ProfilePicture src={UserProfile1} alt="User Name" />
+      <h1 className="text-2xl font-semibold mt-4 text-center">{user?.username}</h1>
+      <p className="text-center mt-2 text-gray-700 text-sm">
+        Welcome {user?.username}! You can browse your profile here.
+      </p>
+    </div>
+    <div className="mt-6">
+      <h2 className="text-xl font-semibold mb-4">Details</h2>
+      <div className="flex flex-col space-y-2 text-sm">
+        <div className="flex justify-between">
+          <span className="text-gray-600">Email:</span>
+          <span className="text-gray-800 text-right">{user?.email}</span>
         </div>
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-4">Details</h2>
-          <div className="flex flex-col space-y-2">
-            <div className="flex justify-between">
-              <span className="text-gray-600">Email:</span>
-              <span className="text-gray-800">{user?.email}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Location:</span>
-              <span className="text-gray-800">{user?.address}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Joined:</span>
-              <span className="text-gray-800">January 2023</span>
-            </div>
-            <center>
-              <Button text={'Logout'} onClick={logout} />
-            </center>
-          </div>
+        <div className="flex justify-between">
+          <span className="text-gray-600">Location:</span>
+          <span className="text-gray-800 text-right">{user?.address}</span>
         </div>
-      </div>
-      {/*details*/}
-      <div className="bg-white shadow-md rounded-lg p-6 w-2/3 ">
-        {/*Bookings*/}
-
-        <h2 className="text-xl font-semibold mb-4">Your Bookings</h2>
-
-
-        {
-          myOrders.map((item, index) => (
-            <div key={index} className="w-full p-5 border-2">
-              <h3>Order #{index + 1}<b className='text-green-900 float-right'> Paid</b></h3>
-              {/* <p>Status: {item.order.status}</p> */}
-              <p className='text-green-900 float-right'>Total amount: ₹{item.order.amount}</p>
-              {/* <button className="float-right"><HiPencilAlt /></button>
-                <CgRemove /> */}
-              <h4>Rooms:</h4>
-              <ul>
-                {item.rooms.map((room : any, idx : any) => (
-                  <li key={idx}>
-                    <div className="w-1/4 block md:inline-block h-full">
-                      <Image
-                        src={room?.img_path}
-                        // src={Imgg}
-                        alt="Room Image"
-                        width={96}
-                        height={96}
-                        className="w-full h-full"
-                      />
-                    </div>
-                    
-                    <div className="w-3/4 block md:inline-block gap-4">
-                    <div className="text-l m-2">Name: {room?.roomname}</div>
-                      <div className="text-l m-2">Price: ₹{room?.price} </div>
-                      <div className="text-l m-2">Qty: 1</div>
-                      {/* <div className="text-l m-2">Date : {checkInDate} to {checkOutDate}</div> */}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-
-
-            </div>
-          ))
-        }
+        <div className="flex justify-between">
+          <span className="text-gray-600">Phone:</span>
+          <span className="text-gray-800 text-right">{user?.phone}</span>
+        </div>
+        <div className="flex justify-center mt-4">
+          <Button text="Logout" onClick={logout} />
+        </div>
       </div>
     </div>
+  </div>
+
+  {/* Bookings */}
+  <div className="bg-white shadow-md rounded-lg p-4 w-full md:w-2/3 max-w-4xl">
+    <h2 className="text-xl font-semibold mb-4">Your Bookings</h2>
+    {myOrders.map((item, index) => (
+      <div key={index} className="w-full p-4 mb-4 border-2 rounded-lg">
+        <div className="flex justify-between items-center flex-wrap">
+          <h3 className="font-semibold text-md">Order #{index + 1}</h3>
+          <span className="text-green-900 font-semibold text-sm">Paid</span>
+        </div>
+        <div className="flex justify-between items-center flex-wrap">
+          <p className="text-sm text-gray-600">Total amount:</p>
+          <p className="text-green-900 font-semibold text-sm">₹{item.order.amount}</p>
+        </div>
+
+        <h4 className="mt-3 font-medium">Rooms:</h4>
+        <ul className="space-y-4 mt-2">
+          {item.rooms.map((room: any, idx: any) => (
+            <li key={idx} className="flex flex-col sm:flex-row sm:items-start gap-4">
+              <div className="w-full sm:w-28">
+                <Image
+                  src={room?.img_path}
+                  alt="Room Image"
+                  width={112}
+                  height={112}
+                  className="rounded-md object-cover w-full h-auto"
+                />
+              </div>
+              <div className="flex-1 text-sm space-y-1">
+                <div><span className="font-medium">Name:</span> {room?.roomname}</div>
+                <div><span className="font-medium">Price:</span> ₹{room?.price}</div>
+                <div><span className="font-medium">Qty:</span> 1</div>
+                {/* <div><span className="font-medium">Date:</span> {checkInDate} to {checkOutDate}</div> */}
+               
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</div>
+
   )
 
 };

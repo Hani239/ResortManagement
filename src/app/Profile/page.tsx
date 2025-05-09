@@ -33,7 +33,7 @@ type Props = {
             <div className="relative flex z-10">
                 <Nav></Nav>
             </div>
-            <div className="mt-48 pb-20">
+            <div className="mt-20 pb-20">
                 {
                     user ?
                         <>
